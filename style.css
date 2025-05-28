@@ -674,6 +674,7 @@ footer {
         margin-top: 10vh;
         margin-left: 4vw;
         width: 100vw;
+        min-height: 101svh;
     }
   
     #collab {
