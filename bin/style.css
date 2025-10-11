@@ -1,0 +1,224 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('/fonts/font1.otf') format('woff2'),
+         url('/fonts/font2.otf') format('woff'),
+         url('/fonts/font3.woff2') format('opentype'); /* OTF jako ostatnia opcja */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Resetowanie domyślnych marginesów i paddingów */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Zapewnienie pełnej wysokości strony */
+body, html {
+    height: 100%;
+    font-family: 'MyFont', sans-serif;
+    color: #2f2f2f;
+    background-color: #fcfcfc;
+    scroll-behavior: smooth;
+}
+
+/* Nagłówek */
+header {
+    font-size: 0.9vw;
+    padding: 5vh 5vw; /* Użycie vh dla lepszej responsywności */
+    position: relative; /* Zapewnia poprawne wyświetlanie */
+    height: 10vh; /* Ustalamy wysokość nagłówka jako 10% wysokości okna */
+}
+
+/* Nawigacja */
+.navdiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-group {
+    display: flex; /* Grupujemy .based-in i .mailto */
+    align-items: center; /* Wyrównanie w pionie */
+}
+
+.based-in {
+    margin-right: 4vw; /* Doda mały odstęp między .based-in a .mailto */
+}
+
+.based-in span, .mailto span {
+    display: block;  /* Ustalamy, by każde <span> zajmowało osobną linię */
+}
+
+.navdiv ul {
+    list-style: none;
+    display: flex;
+    margin-left: auto;
+}
+
+.navdiv ul li {
+    margin-left: 4vw;
+}
+
+.navdiv ul li a {
+    text-decoration: none;
+    color: #2f2f2f;
+    font-size: 1rem;
+    position: relative;
+    padding: 5px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Stałe jasne podkreślenie */
+.navdiv ul li a::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: #b0b0b0; /* Jasne podkreślenie cały czas */
+}
+
+/* Pasek, który się wypełnia przy hover */
+.navdiv ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: #2f2f2f; /* Ciemny kolor przy hover */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efekt podkreślenia - rozwinięcie */
+.navdiv ul li a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Main - cała strona do przewijania */
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 0 5vw;
+}
+
+/* Sekcja hero zajmująca pełny ekran, ale o wysokość krótsza o wysokość nagłówka */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Rozciągnięcie elementów */
+    height: calc(100vh - 10vh); /* Wysokość ekranu pomniejszona o header */
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10vh;
+    position: relative;
+}
+
+.firstname {
+    font-size: 8vw; /* Duża czcionka */
+    font-weight: bold;
+    text-align: left;
+}
+
+.lastname {
+    font-size: 8vw; /* Duża czcionka */
+    font-weight: bold;
+    text-align: right;
+    display: block; /* Zapewnia, że jest niżej */
+}
+
+.firstname.left-slide {
+    transform: translateX(-100vw); /* Przesuwa w lewo */
+    opacity: 1; /* Znika */
+}
+
+.lastname.right-slide {
+    transform: translateX(100vw); /* Przesuwa w prawo */
+    opacity: 1; /* Znika */
+}
+
+.firstname.show {
+    transform: translateX(0); /* Wraca na swoje miejsce */
+    opacity: 1; /* Staje się widoczny */
+}
+
+.lastname.show {
+    transform: translateX(0); /* Wraca na swoje miejsce */
+    opacity: 1; /* Staje się widoczny */
+}
+
+.scroll-down {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 4vh; /* Odstęp od dolnego marginesu hero */
+    left: 0vw;
+    right: 0vw;
+}
+
+.hero-description {
+    font-size: 0.9vw;
+    text-align: right;
+    margin-right: 0vw;
+    width: 40vw; /* Opcjonalnie, aby nie było za szerokie */
+    right: 0; /* Ustawia hero-description przy prawej krawędzi */
+}
+
+.scroll-to-explore {
+    font-size: 0.9vw;
+    text-align: left;
+    opacity: 1; /* Początkowa przezroczystość */
+    transition: opacity 0.3s ease-in-out; /* Dodajemy płynne przejście dla przezroczystości */
+}
+
+.scroll-to-explore.hidden {
+    opacity: 0; /* Ukrywa element */
+}
+
+.scroll-to-explore.blink {
+    animation: blink 0.5s infinite; /* Dodaje animację migotania */
+}
+
+.scroll-to-explore span {
+    display: block; /* Zapewnia, że każdy <span> jest na osobnej linii */
+}
+
+/* Definicja animacji blink */
+@keyframes blink {
+    0% {
+        opacity: 1; /* W pełni widoczny */
+    }
+    50% {
+        opacity: 0; /* Całkowicie przezroczysty */
+    }
+    100% {
+        opacity: 1; /* W pełni widoczny */
+    }
+}
+
+/* Inne sekcje - pojawiają się po scrollowaniu */
+.section {
+    text-align: center;
+    padding: 10vh 0; /* Proporcjonalne paddingi do wysokości ekranu */
+    min-height: 100vh; /* Każda sekcja ma co najmniej wysokość ekranu */
+    width: 100%;
+}
+
+/* Stopka */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}

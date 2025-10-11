@@ -1,0 +1,720 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('/fonts/font1.otf') format('woff2'),
+        url('/fonts/font2.otf') format('woff'),
+        url('/fonts/font3.woff2') format('opentype');
+    /* OTF jako ostatnia opcja */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Resetowanie domyślnych marginesów i paddingów */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Zapewnienie pełnej wysokości strony */
+body, html {
+    min-height: 100%;
+    font-family: 'Outfit', sans-serif;
+    color: #1a1a1a;
+    /* było 2f2f2f */
+    background-color: #fcfcfc;
+    /* scroll-behavior: smooth; */
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    visibility: hidden;
+}
+
+/* Nagłówek */
+header {
+    font-size: 0.9vw;
+    padding: 5vh 10vw;
+    /* Użycie vh dla lepszej responsywności */
+    position: relative;
+    /* Zapewnia poprawne wyświetlanie */
+    height: 10vh;
+    /* Ustalamy wysokość nagłówka jako 10% wysokości okna */
+}
+
+/* Nawigacja */
+.navdiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-group {
+    display: flex;
+    /* Grupujemy .based-in i .mailto */
+    align-items: center;
+    /* Wyrównanie w pionie */
+}
+
+.based-in {
+    margin-right: 4vw;
+    /* Doda mały odstęp między .based-in a .mailto */
+}
+
+.based-in span, .mailto span {
+    display: block;
+    /* Ustalamy, by każde <span> zajmowało osobną linię */
+}
+
+.navdiv ul {
+    list-style: none;
+    display: flex;
+    margin-left: auto;
+}
+
+.navdiv ul li {
+    margin-left: 4vw;
+}
+
+.navdiv ul li a {
+    text-decoration: none;
+    color: #1a1a1a;
+    /* było 2f2f2f */
+    font-size: 1rem;
+    position: relative;
+    padding: 5px 0;
+}
+
+.navdiv ul li a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: #1a1a1a;
+    transition: width 0.5s ease;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.navdiv ul li a:hover::after {
+    width: 100%;
+}
+
+/* HAMBURGER – DOMYŚLNIE SCHOWANY */
+.hamburger {
+    display: none; 
+    cursor: pointer;
+}
+
+.bar{
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in out;
+    transition: all 0.3s ease-in out;
+    background-color: black;
+}
+
+/* Main - cała strona do przewijania */
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10vw;
+}
+
+/* Sekcja hero zajmująca pełny ekran, ale o wysokość krótsza o wysokość nagłówka */
+.hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Rozciągnięcie elementów */
+    min-height: calc(100vh - 10vh);
+    /* Wysokość ekranu pomniejszona o header */
+    position: relative;
+    /* overflow-x: hidden;  */
+    /* overflow-y: hidden; */ 
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url("images/image.jpg") center/cover no-repeat;
+    filter: blur(10px);
+    opacity: 0.5;
+    transform: scale(1.05);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    position: relative;
+}
+
+.firstname {
+    /* letter-spacing: -0.5vw; */
+    font-size: 9vw;
+    /* Duża czcionka */
+    font-weight: bold;
+    text-align: left;
+}
+
+.lastname {
+    font-size: 9vw;
+    /* Duża czcionka */
+    font-weight: bold;
+    text-align: right;
+    display: block;
+    /* Zapewnia, że jest niżej */
+}
+
+.scroll-down {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 5vh;
+    /* Odstęp od dolnego marginesu hero */
+    left: 0vw;
+    right: 0vw;
+}
+
+.hero-description {
+    font-size: 0.9vw;
+    text-align: right;
+    margin-right: 0vw;
+    width: 40vw;
+    /* Opcjonalnie, aby nie było za szerokie */
+    right: 0;
+    /* Ustawia hero-description przy prawej krawędzi */
+}
+
+.scroll-to-explore {
+    font-size: 17px; /* bylo 0.9vw */
+    text-align: left;
+    opacity: 1;
+    /* Początkowa przezroczystość */
+    transition: opacity 0.3s ease-in-out;
+    /* Dodajemy płynne przejście dla przezroczystości */
+}
+
+.scroll-to-explore.hidden {
+    opacity: 0;
+    /* Ukrywa element */
+}
+
+.scroll-to-explore.blink {
+    animation: blink 0.5s infinite;
+    /* Dodaje animację migotania */
+}
+
+.scroll-to-explore span {
+    display: block;
+    /* Zapewnia, że każdy <span> jest na osobnej linii */
+}
+
+/* Definicja animacji blink */
+@keyframes blink {
+    0% {
+        opacity: 1;
+        /* W pełni widoczny */
+    }
+
+    50% {
+        opacity: 0;
+        /* Całkowicie przezroczysty */
+    }
+
+    100% {
+        opacity: 1;
+        /* W pełni widoczny */
+    }
+}
+
+.divider {
+    width: 0;
+    height: 1px;
+    background-color: #1a1a1a; /* Kolor kreski */
+    margin: 0 auto; /* Wyśrodkowanie kreski */
+    transition: width 0.5s ease; /* Płynne przejście szerokości */
+}
+
+/* About me */
+.section {
+    text-align: left;
+    padding: 5vh 0;
+    min-height: 100vh;
+    width: 100%;
+}
+
+#about h2 {
+    font-size: 4vw;
+    min-height: 10vw;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.about-container {
+    margin-top: 2vw;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.responsibilities {
+    margin-top: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.about-text-wrapper {
+    display: flex;
+    flex-direction: column;  /* Ustawienie tekstu jeden pod drugim */
+    max-width: 50%;  /* Dostosowanie szerokości kontenera z tekstem */
+    gap: 5vw;
+}
+
+#about-text3{
+    /* display: flex; */
+    text-align: left;
+    font-size: 1.5vw;
+    display: block;
+    line-height: 1.5;
+    max-width: 50%;
+}
+
+#about-text3 span {
+    display: block;
+}
+
+.about-text {
+    font-size: 1.5vw;
+    line-height: 1.5;
+}
+
+.about-text span {
+    display: block;
+}
+
+
+.image {
+    width: 25%;  /* Obrazek zajmuje 40% szerokości kontenera */
+    height: auto;
+    opacity: 0.85;
+    mix-blend-mode: multiply;
+    border-radius: 20px;
+    box-shadow: 25px 25px 30px rgba(7, 7, 7, 0.449);
+    filter: grayscale(30%) contrast(120%);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Experience */
+#experience {
+    /* background-color: pink; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Wyśrodkowanie poziome */
+    align-items: center;      /* Wyśrodkowanie pionowe */
+    text-align: center;       /* Wyśrodkowanie tekstu wewnątrz */
+    margin-top: 10vw;
+}
+
+#experience h2 {
+    font-size: 9vw;  /* Ustawienie dużej czcionki */
+    display: inline-block; /* Ustawienie dla wszystkich liter w jednej linii */
+    letter-spacing: -1vw; /* Zmniejszenie odstępów między literami */
+}
+
+.letter {
+    display: inline-block; 
+    opacity: 0; /* Ukrycie liter na początku animacji */
+}
+
+.technologies {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5vw;
+    /* line-height: 1.5; */
+    margin-top: 5vw;
+    gap: 2vw;
+}
+
+.technology {
+    opacity: 0;;
+}
+
+/*Services section */
+#services {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vw;
+}
+
+#services h2 {
+    font-size: 4vw;
+    min-height: 10vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 3vw;;
+}
+
+.service {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5vw;
+    margin-bottom: 5vw;
+}
+
+.service h1{
+    font-size: 1.5vw;;
+    color: black;
+}
+
+.service span{
+    font-size: 1vw;
+    color: black;
+}
+
+.divider {
+    width: 0;
+    height: 1px;
+    background-color: #d9d9d9; /* Kolor kreski */
+    margin: 0 auto; /* Wyśrodkowanie kreski */
+    transition: width 0.5s ease; /* Płynne przejście szerokości */
+}
+
+/* Contact section */
+#contact {
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #1a1a1a;
+    color: #fcfcfc;
+    transform: translateX(-10vw);
+    min-height: 101svh;
+    width: 100vw;
+}
+
+.subsection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    flex: 1; /* Równa wysokość każdej podsekcji */
+}
+
+#collab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vw;
+    gap: 2vw;
+}
+
+#profiles {
+    gap: 20vw;
+}
+
+#message-form {
+    flex-direction: column;
+}
+
+#message-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    max-width: 600px;
+}
+
+#message-form textarea {
+    width: 100%;
+    min-height: 120px;
+    border: none;
+    border-radius: 30px;
+    padding: 1em;
+    font-size: 0.7vw;
+    resize: vertical;
+    background-color: #2a2a2a;
+    color: #fcfcfc;
+    margin-bottom: 1vw;
+    margin-top: 5vw;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    
+    /* Dodane do centrowania tekstu */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* Dopełnienie pionowe */
+    padding-top: 3em;
+}
+
+/* #message-form textarea::placeholder {
+    color: #888;
+    font-style: italic;
+    animation: blink 1.5s step-start infinite;
+} */
+
+@keyframes blink {
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+#message-form button {
+    background-color: #fcfcfc;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 8px;
+    padding: 0.3em 2em;
+    margin-top: 1vw;
+    margin-bottom: 3vw;
+    font-size: 0.8vw;
+    cursor: pointer;
+    /* transition: background-color 0.3s ease; */
+}
+
+#message-form button:hover {
+    background-color: #ddd;
+}
+
+.message-label {
+    font-size: 1.3vw;
+    margin-bottom: 0.5em;
+    margin-top: 2em;
+    color: #fcfcfc;
+    animation: pulse 0.2s infinite;
+    /* text-transform: uppercase; */
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+} */
+
+
+
+/* Stopka */
+footer {
+    background-color: #1a1a1a;
+    color: #fcfcfc;
+    padding: 1em;
+    text-align: center;
+}
+
+/* --- RESPONSYWNOŚĆ NA TELEFONY --- */
+@media (max-width: 768px) {
+    body,html {
+        overflow: auto;
+    }
+
+    header {
+      font-size: 3vw;
+      padding: 5vh 5vw;
+      height: 20vh;
+    }
+  
+    .navdiv {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 2vh; 
+    }
+  
+    .nav-menu {
+        position: fixed;
+        left: -200%;
+        top: 70px;
+        gap: 5vw;
+        flex-direction: row;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+    }
+  
+    .navdiv ul li {
+        margin: 16px 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hamburger.active .bar:nth-child(2){
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1){
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3){
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        padding: 0 5vw;
+    }
+
+    .hero {
+        min-height: 80vh;
+    }
+
+    .name-container {
+        margin-top: -25vh;
+    }
+  
+    .firstname, .lastname {
+      font-size: 12vw;
+      /* background-color: red; */
+    }
+
+    .scroll-down {
+        display: flex;
+        flex-direction: row;
+        /* background-color: pink; */
+        margin-bottom: 10vh;
+    }
+  
+    .hero-description {
+      font-size: 3vw;
+      width: 100%;
+      text-align: left;
+      /* margin-top: 2vh; */
+    }
+  
+    .scroll-to-explore {
+      font-size: 3vw;
+      margin-right: 4vw;
+    }
+  
+    .about-container,
+    .responsibilities {
+      flex-direction: column;
+      gap: 5vh;
+      align-items: center;
+      margin-top: 5vh;
+    }
+  
+    .about-text-wrapper,
+    #about-text3 {
+      max-width: 100%;
+      font-size: 4vw;
+      /* background-color: pink; */
+      /* margin-top: 5vh; */
+     }
+
+    #about-text3 {
+        margin-top: 5vh;
+
+    }
+  
+    .about-text {
+      font-size: 4vw;
+    }
+  
+    .image {
+      width: 70%;
+      margin-top: 3vh;
+    }
+  
+    #about h2 {
+        font-size: 8vw;
+        min-height: unset;
+        margin-top: 0;
+
+    }
+
+    #services {
+        margin-top: -40vh;
+    }
+
+    #services h2 {
+      font-size: 8vw;
+      min-height: unset;
+    }
+  
+    .service h1 {
+      font-size: 5vw;
+      margin-top: 5vh;
+
+    }
+  
+    .service span {
+      font-size: 4vw;
+    }
+
+    .responsibilities #about-text3 {
+        order: 1;
+    }
+      
+    .responsibilities img {
+        order: 2;
+    }
+  
+    #experience h2 {
+      font-size: 12vw;
+      letter-spacing: -0.5vw;
+      margin-top: -40vh;
+    }
+  
+    .technologies {
+      font-size: 4vw;
+      gap: 4vw;
+    }
+
+    #contact {
+        /* transform: none; */
+        margin-top: 10vh;
+        margin-left: 4vw;
+        width: 100vw;
+    }
+  
+    #collab {
+      font-size: 6vw;
+      margin-top: -5vh;
+    }
+  
+    #profiles {
+      flex-direction: column;
+      gap: 10vw;
+    }
+  
+    #message-form form {
+      width: 95%;
+      margin-top: -3vh;
+    }
+  
+    #message-form textarea {
+      font-size: 3vw;
+
+    }
+  
+    #message-form button {
+      font-size: 3vw;
+      margin-top: 2vh;
+    }
+  
+    footer {
+      font-size: 3vw;
+      margin-bottom: -5vh;
+    }
+  }
+  
