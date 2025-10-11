@@ -134,7 +134,6 @@ main {
     /* overflow-y: hidden; */ 
 }
 
-<<<<<<< HEAD
 .hero-bg {
     position: absolute;
     inset: 0;
@@ -146,8 +145,6 @@ main {
     pointer-events: none;
   }
 
-=======
->>>>>>> 6c393f0c61f4b50cc94d7a5a30105e07b76b7cf1
 .name-container {
     display: flex;
     flex-direction: column;
@@ -688,10 +685,7 @@ footer {
         margin-top: 10vh;
         margin-left: 4vw;
         width: 100vw;
-<<<<<<< HEAD
-=======
         min-height: 101svh;
->>>>>>> 6c393f0c61f4b50cc94d7a5a30105e07b76b7cf1
     }
   
     #collab {
