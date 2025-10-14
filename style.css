@@ -553,19 +553,35 @@ footer {
 
     .hamburger {
         display: block;
-    }
-
-    .hamburger.active .bar:nth-child(2){
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;       /* szerokość hamburgera */
+        height: 22px;      /* wysokość hamburgera */
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+      
+      .bar {
+        height: 3px;                  /* grubość kreski */
+        width: 30px;
+        background-color: black;      /* kolor (możesz zmienić np. na white) */
+        border-radius: 10px;          /* 🔥 zaokrąglenie końców */
+        transition: all 0.3s ease-in-out; /* płynne animacje */
+      }
+      
+      /* Aktywne stany (Twoje już są OK) */
+      .hamburger.active .bar:nth-child(2) {
         opacity: 0;
-    }
-
-    .hamburger.active .bar:nth-child(1){
+      }
+      
+      .hamburger.active .bar:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.active .bar:nth-child(3){
-        transform: translateY(-8px) rotate(-45deg);
-    }
+      }
+      
+      .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+      
 
     main {
         display: flex;
@@ -583,30 +599,41 @@ footer {
   
     .firstname, .lastname {
       font-size: 12vw;
+      text-align: center;
       /* background-color: red; */
     }
 
     .scroll-down {
         display: flex;
-        flex-direction: row;
+        flex-direction: column-reverse; /* 🔥 odwraca kolejność elementów */
+        align-items: center; /* wyśrodkowanie poziome */
         /* background-color: pink; */
         margin-bottom: 10vh;
-    }
-  
-    .hero-description {
-      font-size: 3vw;
-      width: 100%;
-      text-align: left;
-      /* margin-top: 2vh; */
-    }
-  
-    .scroll-to-explore {
-      font-size: 3vw;
-      margin-right: 4vw;
-    }
+        text-align: center;
+      }
+      
+      .hero-description {
+        font-size: 3vw;
+        width: 100%;
+        max-width: 900px;
+        margin-top: 2vh; /* odstęp między opisem a "scroll to explore" */
+        text-align: center;
+      }
+      
+      .scroll-to-explore {
+        font-size: 3vw;
+        display: flex;
+        gap: 0.2em;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5vh;
+      }
+      
+      
   
     .about-container,
     .responsibilities {
+      text-align: center;     /* wyśrodkowanie tekstu */
       flex-direction: column;
       gap: 5vh;
       align-items: center;
@@ -623,7 +650,7 @@ footer {
 
     #about-text3 {
         margin-top: 5vh;
-
+        text-align: center;
     }
   
     .about-text {
@@ -636,6 +663,7 @@ footer {
     }
   
     #about h2 {
+        text-align: center;
         font-size: 8vw;
         min-height: unset;
         margin-top: 0;
@@ -644,6 +672,7 @@ footer {
 
     #services {
         margin-top: -40vh;
+        text-align: center;
     }
 
     #services h2 {
