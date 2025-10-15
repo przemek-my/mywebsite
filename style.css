@@ -662,12 +662,10 @@ footer {
 
     .about-text span {
         display: inline;
-        white-space: normal; /* pozwala zawijać się wierszom, jeśli chcesz */
       }
 
       #about-text3 span {
         display: inline;
-        white-space: normal; /* pozwala zawijać się wierszom, jeśli chcesz */
       }
   
     .image {
