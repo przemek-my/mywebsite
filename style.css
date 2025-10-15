@@ -530,6 +530,7 @@ footer {
       flex-direction: row;
       align-items: flex-start;
       gap: 2vh; 
+      font-size: 3.5vw;
     }
   
     .nav-menu {
@@ -613,7 +614,7 @@ footer {
       }
       
       .hero-description {
-        font-size: 3vw;
+        font-size: 3.5vw;
         width: 100%;
         max-width: 900px;
         margin-top: 2vh; /* odstęp między opisem a "scroll to explore" */
@@ -629,7 +630,9 @@ footer {
         margin-top: 5vh;
       }
       
-      
+      #about {
+        margin-top: -5vh;
+      }
   
     .about-container,
     .responsibilities {
@@ -656,6 +659,16 @@ footer {
     .about-text {
       font-size: 4vw;
     }
+
+    .about-text span {
+        display: inline;
+        white-space: normal; /* pozwala zawijać się wierszom, jeśli chcesz */
+      }
+
+      #about-text3 span {
+        display: inline;
+        white-space: normal; /* pozwala zawijać się wierszom, jeśli chcesz */
+      }
   
     .image {
       width: 70%;
@@ -667,7 +680,6 @@ footer {
         font-size: 8vw;
         min-height: unset;
         margin-top: 0;
-
     }
 
     #services {
