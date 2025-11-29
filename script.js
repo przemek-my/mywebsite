@@ -227,31 +227,31 @@ window.onload = function() {
     );
 
     // Animacja parallax dla obrazów
-    gsap.to(".about-container .image", {
-        //yPercent: -20, // Używamy procentów zamiast pikseli dla lepszej responsywności
-        y: -100,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: ".about-container",
-            start: "top bottom", // Rozpocznij gdy kontener pojawia się na dole ekranu
-            end: "bottom top", // Zakończ gdy kontener znika na górze
-            scrub: 5, // Natychmiastowa reakcja bez żadnego opóźnienia
-            invalidateOnRefresh: true // Przelicza wartości przy zmianie rozmiaru okna
-        }
-    });
+    // gsap.to(".about-container .image", {
+    //     yPercent: -35, // Używamy procentów zamiast pikseli dla lepszej responsywności
+    //     //y: -250,
+    //     ease: "power3.out",
+    //     scrollTrigger: {
+    //         trigger: ".about-container",
+    //         start: "top bottom", // Rozpocznij gdy kontener pojawia się na dole ekranu
+    //         end: "bottom top", // Zakończ gdy kontener znika na górze
+    //         scrub: 18, // Natychmiastowa reakcja bez żadnego opóźnienia
+    //         invalidateOnRefresh: true // Przelicza wartości przy zmianie rozmiaru okna
+    //     }
+    // });
 
-    gsap.to(".responsibilities .image", {
-        //yPercent: -15,
-        y: -100,
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: ".responsibilities",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 5,
-            invalidateOnRefresh: true
-        }
-    });
+    // gsap.to(".responsibilities .image", {
+    //     yPercent: -20,
+    //     //y: -250,
+    //     ease: "power3.out",
+    //     scrollTrigger: {
+    //         trigger: ".responsibilities",
+    //         start: "top bottom",
+    //         end: "bottom top",
+    //         scrub: 18,
+    //         invalidateOnRefresh: true
+    //     }
+    // });
 
     gsap.fromTo(".about-text-wrapper span", 
         { opacity: 0, y: 30 }, 
