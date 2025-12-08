@@ -3,6 +3,34 @@ const scrollToExplore = document.querySelector('.scroll-to-explore');
 const firstname = document.querySelector('.firstname');
 const lastname = document.querySelector('.lastname');
 const navdiv = document.querySelector('.navdiv');
+let lenis;
+
+// Uniwersalna funkcja przewijania — używa Lenis jeśli dostępny, inaczej natywny smooth
+function smoothScrollTo(targetOrY) {
+    // jeśli przekazano selektor
+    if (typeof targetOrY === 'string') {
+        const el = document.querySelector(targetOrY);
+        if (!el) return;
+        targetOrY = el;
+    }
+
+    if (typeof lenis !== 'undefined' && lenis) {
+        try {
+            if (typeof targetOrY === 'number') {
+                lenis.scrollTo(targetOrY, { offset: 0 });
+            } else if (targetOrY instanceof Element) {
+                lenis.scrollTo(targetOrY, { offset: 0 });
+            }
+        } catch (e) {
+            // fallback
+            if (typeof targetOrY === 'number') window.scrollTo({ top: targetOrY, behavior: 'smooth' });
+            else targetOrY.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    } else {
+        if (typeof targetOrY === 'number') window.scrollTo({ top: targetOrY, behavior: 'smooth' });
+        else targetOrY.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
 
 // Blokujemy scrollowanie na początku
 document.body.style.overflow = "hidden";
@@ -45,7 +73,7 @@ window.onload = function() {
     setTimeout(() => {
         // document.body.style.overflow = "auto";
         // Scrolling po 2 sekundach mozliwy
-        const lenis = new Lenis();
+        lenis = new Lenis();
 
         function raf(time) {
             lenis.raf(time);
@@ -53,7 +81,85 @@ window.onload = function() {
         }
         requestAnimationFrame(raf);
 
+        // Po utworzeniu lenis — podłączamy obsługę kliknięć do sekcji i linków
+        function isInteractiveElement(el) {
+            return !!el.closest('a, button, input, textarea, select, label, svg');
+        }
+
+        function setupScrollHandlers() {
+            // Kliknięcie w samą sekcję przewija do niej płynnie
+            document.querySelectorAll('section.section').forEach(sec => {
+                sec.addEventListener('click', (e) => {
+                    // jeśli kliknięcie pochodzi z elementu interaktywnego — ignorujemy
+                    if (isInteractiveElement(e.target)) return;
+                    smoothScrollTo(sec);
+                });
+            });
+
+            // Przechwytujemy kliknięcia w linki nawigacji, żeby użyć lenis.scrollTo
+            document.querySelectorAll('.nav-menu a[href^="#"]').forEach(a => {
+                a.addEventListener('click', (ev) => {
+                    ev.preventDefault();
+                    const href = a.getAttribute('href');
+                    const target = document.querySelector(href);
+                    if (!target) return;
+                    smoothScrollTo(target);
+                    // zamknij hamburger na urządzeniach mobilnych
+                    const navMenu = document.querySelector('.nav-menu');
+                    const hamburger = document.querySelector('.hamburger');
+                    if (navMenu) navMenu.classList.remove('active');
+                    if (hamburger) hamburger.classList.remove('active');
+                });
+            });
+        }
+
+        setupScrollHandlers();
+
     }, 2000);
+
+    // --- Back to top button ---
+    function createBackToTop() {
+        let btn = document.getElementById('back-to-top');
+        if (btn) return btn;
+        btn = document.createElement('button');
+        btn.id = 'back-to-top';
+        btn.setAttribute('aria-label', 'Powrót na początek strony');
+        btn.innerHTML = '\u25B2'; // trójkąt w górę
+        document.body.appendChild(btn);
+        return btn;
+    }
+
+    const backBtn = createBackToTop();
+
+    function showBackButton() {
+        backBtn.classList.add('visible');
+    }
+
+    function hideBackButton() {
+        backBtn.classList.remove('visible');
+    }
+
+    // Pokaż guzik kiedy nie jesteśmy na samej górze
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 30) showBackButton(); else hideBackButton();
+    });
+
+    // Kliknięcie przycisku przewija na górę (używa Lenis jeśli dostępny)
+    backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        smoothScrollTo(0);
+    });
+
+    // Dodatkowo pokaż przy kliknięciu sekcji (już obsługiwane), ale na pewno pokaż po zakończeniu scrollowania lenis
+    if (typeof lenis !== 'undefined' && lenis && typeof lenis.on === 'function') {
+        try {
+            lenis.on('scroll', ({ scroll }) => {
+                if (scroll > 30) showBackButton(); else hideBackButton();
+            });
+        } catch (e) {
+            // nie blokujemy, jeśli wersja lenis nie wspiera .on
+        }
+    }
 
     // Przywracanie scrolla na górę strony
     if ("scrollRestoration" in history) {
@@ -61,8 +167,16 @@ window.onload = function() {
     }
     window.scrollTo(0, 0);
 
-    // Usunięcie migania napisu "SCROLL TO EXPLORE"
-    scrollToExplore.classList.remove('blink');
+    // Uruchomienie migotania napisu "SCROLL TO EXPLORE" od razu po załadowaniu
+    // (wcześniej było usuwane — teraz aktywujemy animację natychmiast)
+    startBlinking();
+
+    // Animacja wejścia dla napisu "collaborate" (dodajemy klasę, która uruchamia CSS animation)
+    const collabWord = document.querySelector('.collab-word');
+    if (collabWord) {
+        // Niewielkie opóźnienie, żeby zsynchronizować z innymi elementami
+        setTimeout(() => collabWord.classList.add('animate-in'), 800);
+    }
 
     // Animacja dla firstname i lastname
     gsap.fromTo(navdiv, 
@@ -111,6 +225,33 @@ window.onload = function() {
             }
         }
     );
+
+    // Animacja parallax dla obrazów
+    // gsap.to(".about-container .image", {
+    //     yPercent: -35, // Używamy procentów zamiast pikseli dla lepszej responsywności
+    //     //y: -250,
+    //     ease: "power3.out",
+    //     scrollTrigger: {
+    //         trigger: ".about-container",
+    //         start: "top bottom", // Rozpocznij gdy kontener pojawia się na dole ekranu
+    //         end: "bottom top", // Zakończ gdy kontener znika na górze
+    //         scrub: 18, // Natychmiastowa reakcja bez żadnego opóźnienia
+    //         invalidateOnRefresh: true // Przelicza wartości przy zmianie rozmiaru okna
+    //     }
+    // });
+
+    // gsap.to(".responsibilities .image", {
+    //     yPercent: -20,
+    //     //y: -250,
+    //     ease: "power3.out",
+    //     scrollTrigger: {
+    //         trigger: ".responsibilities",
+    //         start: "top bottom",
+    //         end: "bottom top",
+    //         scrub: 18,
+    //         invalidateOnRefresh: true
+    //     }
+    // });
 
     gsap.fromTo(".about-text-wrapper span", 
         { opacity: 0, y: 30 }, 
@@ -356,9 +497,9 @@ window.onload = function() {
     );
 
     gsap.fromTo("#collab span", 
-        { scale: 3, opacity: 0 }, // Początkowy stan: mały i przezroczysty
+        { scale: 1.7, opacity: 0 }, // Początkowy stan: mały i przezroczysty
         { 
-          scale: 1.7, // Powiększenie podczas scrolla
+          scale: 3, // Powiększenie podczas scrolla
           opacity: 1, // Stopniowe pojawienie się
           scrollTrigger: {
             trigger: "#collab",
