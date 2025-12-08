@@ -29,7 +29,7 @@ body, html {
     font-family: "Sora", sans-serif;
     color: #1a1a1a;
     /* było 2f2f2f */
-    background-color: #fcfcfc;
+    background-color: #F0EEE9;
     /* scroll-behavior: smooth; */
     -webkit-overflow-scrolling: touch;
     overflow-y: hidden;
@@ -419,7 +419,7 @@ main {
     justify-content: center;
     text-align: center;
     background-color: #1a1a1a;
-    color: #fcfcfc;
+    color: #F0EEE9;
     transform: translateX(-10vw);
     min-height: 101svh;
     width: 100vw;
@@ -449,7 +449,7 @@ main {
     font-weight: bold;
     font-size: 4vw; /* large but responsive */
     line-height: 1;
-    color: white; /* gradient via background-clip */
+    color: #F0EEE9;; /* gradient via background-clip */
     /* background-image: linear-gradient(90deg, #7b61ff 0%, #00d4ff 60%, #7be4ff 100%); */
     -webkit-background-clip: text;
     background-clip: text;
@@ -507,7 +507,7 @@ main {
     top: 50%;
     transform: translateY(-50%) translateX(-8px);
     background: rgba(26,26,26,0.9);
-    color: #fff;
+    color: #F0EEE9;
     border: none;
     border-radius: 8px;
     padding: 0.6rem 0.7rem;
@@ -569,7 +569,7 @@ main {
     font-size: 0.7vw;
     resize: vertical;
     background-color: #2a2a2a;
-    color: #fcfcfc;
+    color: #F0EEE9;
     margin-bottom: 1vw;
     margin-top: 5vw;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
@@ -596,7 +596,7 @@ main {
 }
 
 #message-form button {
-    background-color: #fcfcfc;
+    background-color: #F0EEE9;
     color: #1a1a1a;
     border: none;
     border-radius: 8px;
@@ -616,7 +616,7 @@ main {
     font-size: 1.3vw;
     margin-bottom: 0.5em;
     margin-top: 2em;
-    color: #fcfcfc;
+    color: #F0EEE9;
     animation: pulse 0.2s infinite;
     /* text-transform: uppercase; */
     font-weight: 600;
@@ -667,7 +667,7 @@ main {
 /* Po wysłaniu – fajeczka */
 #message-form button.success {
     background-color: #4caf50;
-    color: #fff;
+    color: #F0EEE9;
 }
 #message-form button.success::after {
     /* content: "✔"; */
@@ -683,7 +683,7 @@ main {
 /* Po błędzie – krzyżyk */
 #message-form button.error {
     background-color: #f44336;
-    color: #fff;
+    color: #F0EEE9;
 }
 #message-form button.error::after {
     content: "✖";
@@ -699,7 +699,7 @@ main {
 /* Stopka */
 footer {
     background-color: #1a1a1a;
-    color: #fcfcfc;
+    color: #F0EEE9;
     padding: 1em;
     text-align: center;
 }
