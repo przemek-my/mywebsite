@@ -177,9 +177,10 @@
             </section>
         
             <section id="message-form" class="subsection">
-                <form>
+                <form id="contactForm">
                     <textarea id="message" name="message" placeholder="send me a message..." required></textarea>
                     <button type="submit">Send</button>
+                    <p id="status"></p>
                 </form>
             </section>
             <section id = "profiles" class = "subsection">
@@ -200,6 +201,13 @@
     </main>
 
     <!-- Dodanie skryptu JS -->
+     <!-- Podpięcie EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("JcBlczURJPoQ2s_H_"); // <-- wklej tu swój public key
+        })();
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@latest/bundled/lenis.min.js"></script>

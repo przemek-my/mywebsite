@@ -536,7 +536,7 @@ window.onload = function() {
     });
 
 
-        // === HAMBURGER MENU ===
+    // === HAMBURGER MENU ===
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -551,4 +551,53 @@ window.onload = function() {
         navMenu.classList.remove("active");
     }))
     }
+
+    // === EMAIL SEND ===
+
+    const form = document.getElementById("contactForm");
+    const button = form.querySelector("button");
+    const status = document.getElementById("status");
+    
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+    
+        const message = document.getElementById("message").value;
+        if (!message.trim()) return;
+    
+        // START ładowania
+        button.className = "loading";
+        status.textContent = "";
+    
+        emailjs.send("service_m2ajr8i", "template_iwd3vux", {
+            message: message
+        }, "JcBlczURJPoQ2s_H_")
+        .then(() => {
+            // SUCCESS
+            button.className = "success";
+            button.textContent = "Sent!"
+            status.textContent = "I'll respond shortly.";
+            document.getElementById("message").value = "";
+            // window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+            setTimeout(() => {
+                button.textContent = "Send"
+                button.className = ""; // przywraca normalny przycisk
+                status.textContent = "";
+            }, 3000);
+        })
+        .catch(() => {
+            // ERROR
+            button.className = "error";
+            button.textContent = "Error!"
+            status.textContent = "Something went wrong.";
+    
+            setTimeout(() => {
+                button.textContent = "Send"
+                button.className = ""; // przywraca normalny przycisk
+                status.textContent = "";
+            }, 3000);
+        });
+    });
+    
+    
 }

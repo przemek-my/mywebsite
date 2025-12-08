@@ -628,7 +628,73 @@ main {
     50% { opacity: 0.6; }
 } */
 
+/* Przycisk w trybie ładowania */
+#message-form button.loading {
+    width: 3em;
+    height: 3em;
+    padding: 0;
+    border-radius: 50%;
+    position: relative;
+    background-color: #fcfcfc;
+    color: transparent;
+    cursor: default;
+    transition: all 0.3s ease;
+}
 
+/* Animacja kółka ładowania */
+#message-form button.loading::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2em;
+    height: 2em;
+    margin-top: -1em;
+    margin-left: -1em;
+    border-radius: 50%;
+    border: 3px solid #1a1a1a;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+/* Spin keyframes */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Po wysłaniu – fajeczka */
+#message-form button.success {
+    background-color: #4caf50;
+    color: #fff;
+}
+#message-form button.success::after {
+    /* content: "✔"; */
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    border: none;
+    animation: none;
+    font-size: 1.2em;
+}
+
+/* Po błędzie – krzyżyk */
+#message-form button.error {
+    background-color: #f44336;
+    color: #fff;
+}
+#message-form button.error::after {
+    content: "✖";
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    border: none;
+    animation: none;
+    font-size: 1.2em;
+}
 
 /* Stopka */
 footer {
@@ -637,6 +703,7 @@ footer {
     padding: 1em;
     text-align: center;
 }
+
 
 /* --- RESPONSYWNOŚĆ NA TELEFONY --- */
 @media (max-width: 768px) {
@@ -656,7 +723,7 @@ footer {
       gap: 2vh; 
       font-size: 3.5vw;
     }
-  
+
     .nav-menu {
         position: fixed;
         left: -200%;
@@ -670,6 +737,10 @@ footer {
   
     .navdiv ul li {
         margin: 16px 0;
+    }
+
+    .navdiv ul li a{
+        font-size: 3vw;
     }
 
     .nav-menu.active {
@@ -797,7 +868,7 @@ footer {
   
     #about h2 {
         text-align: center;
-        font-size: 8vw;
+        font-size: 11vw;
         min-height: unset;
         margin-top: 0;
     }
@@ -808,7 +879,7 @@ footer {
     }
 
     #services h2 {
-      font-size: 8vw;
+      font-size: 11vw;
       min-height: unset;
     }
   
