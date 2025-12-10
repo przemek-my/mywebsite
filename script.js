@@ -69,53 +69,46 @@ window.addEventListener('scroll', handleScroll);
 window.onload = function() {    
     document.body.style.visibility = "visible";
 
-    //Odblokowuje scrollowanie
-    setTimeout(() => {
-        // document.body.style.overflow = "auto";
-        // Scrolling po 2 sekundach mozliwy
-        lenis = new Lenis();
+    // Inicjalizuj Lenis natychmiast zamiast czekać 2 sekundy
+    lenis = new Lenis();
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+    function raf(time) {
+        lenis.raf(time);
         requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
-        // Po utworzeniu lenis — podłączamy obsługę kliknięć do sekcji i linków
-        function isInteractiveElement(el) {
-            return !!el.closest('a, button, input, textarea, select, label, svg');
-        }
+    // Po utworzeniu lenis — podłączamy obsługę kliknięć do sekcji i linków
+    function isInteractiveElement(el) {
+        return !!el.closest('a, button, input, textarea, select, label, svg');
+    }
 
-        function setupScrollHandlers() {
-            // Kliknięcie w samą sekcję przewija do niej płynnie
-            document.querySelectorAll('section.section').forEach(sec => {
-                sec.addEventListener('click', (e) => {
-                    // jeśli kliknięcie pochodzi z elementu interaktywnego — ignorujemy
-                    if (isInteractiveElement(e.target)) return;
-                    smoothScrollTo(sec);
-                });
+    function setupScrollHandlers() {
+        // Kliknięcie w samą sekcję przewija do niej płynnie
+        document.querySelectorAll('section.section').forEach(sec => {
+            sec.addEventListener('click', (e) => {
+                if (isInteractiveElement(e.target)) return;
+                smoothScrollTo(sec);
             });
+        });
 
-            // Przechwytujemy kliknięcia w linki nawigacji, żeby użyć lenis.scrollTo
-            document.querySelectorAll('.nav-menu a[href^="#"]').forEach(a => {
-                a.addEventListener('click', (ev) => {
-                    ev.preventDefault();
-                    const href = a.getAttribute('href');
-                    const target = document.querySelector(href);
-                    if (!target) return;
-                    smoothScrollTo(target);
-                    // zamknij hamburger na urządzeniach mobilnych
-                    const navMenu = document.querySelector('.nav-menu');
-                    const hamburger = document.querySelector('.hamburger');
-                    if (navMenu) navMenu.classList.remove('active');
-                    if (hamburger) hamburger.classList.remove('active');
-                });
+        // Przechwytujemy kliknięcia w linki nawigacji
+        document.querySelectorAll('.nav-menu a[href^="#"]').forEach(a => {
+            a.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                const href = a.getAttribute('href');
+                const target = document.querySelector(href);
+                if (!target) return;
+                smoothScrollTo(target);
+                const navMenu = document.querySelector('.nav-menu');
+                const hamburger = document.querySelector('.hamburger');
+                if (navMenu) navMenu.classList.remove('active');
+                if (hamburger) hamburger.classList.remove('active');
             });
-        }
+        });
+    }
 
-        setupScrollHandlers();
-
-    }, 2000);
+    setupScrollHandlers();
 
     // --- Back to top button ---
     function createBackToTop() {
@@ -139,10 +132,14 @@ window.onload = function() {
         backBtn.classList.remove('visible');
     }
 
-    // Pokaż guzik kiedy nie jesteśmy na samej górze
+    // Pokaż guzik kiedy nie jesteśmy na samej górze - debounce dla wydajności
+    let scrollTimeout;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 30) showBackButton(); else hideBackButton();
-    });
+        if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+        scrollTimeout = requestAnimationFrame(() => {
+            if (window.scrollY > 30) showBackButton(); else hideBackButton();
+        });
+    }, { passive: true });
 
     // Kliknięcie przycisku przewija na górę (używa Lenis jeśli dostępny)
     backBtn.addEventListener('click', (e) => {
@@ -171,27 +168,26 @@ window.onload = function() {
     // (wcześniej było usuwane — teraz aktywujemy animację natychmiast)
     startBlinking();
 
-    // Animacja wejścia dla napisu "collaborate" (dodajemy klasę, która uruchamia CSS animation)
+    // Animacja wejścia dla napisu "collaborate"
     const collabWord = document.querySelector('.collab-word');
     if (collabWord) {
-        // Niewielkie opóźnienie, żeby zsynchronizować z innymi elementami
-        setTimeout(() => collabWord.classList.add('animate-in'), 800);
+        setTimeout(() => collabWord.classList.add('animate-in'), 100);
     }
 
     // Animacja dla firstname i lastname
     gsap.fromTo(navdiv, 
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.5, delay: 0.5, ease: "power3.out" }
+        { opacity: 1, y: 0, duration: 0.3, delay: 0, ease: "power3.out" }
     );
 
     gsap.fromTo(firstname, 
-        { opacity: 0, x: -200 }, // Początkowy stan: ukryty po lewej stronie
-        { opacity: 1, x: 0, duration: 1, delay: 1, ease: "power3.out" } // Końcowy stan: widoczny w normalnej pozycji
+        { opacity: 0, x: -200 },
+        { opacity: 1, x: 0, duration: 0.6, delay: 0.1, ease: "power3.out" }
     );
     
     gsap.fromTo(lastname, 
-        { opacity: 0, x: 200 }, // Początkowy stan: ukryty po prawej stronie
-        { opacity: 1, x: 0, duration: 1, delay: 1, ease: "power3.out" }
+        { opacity: 0, x: 200 },
+        { opacity: 1, x: 0, duration: 0.6, delay: 0.1, ease: "power3.out" }
     );
 
     // Animacja dla scroll-down
@@ -200,10 +196,10 @@ window.onload = function() {
         { 
             opacity: 1, 
             y: 0, 
-            duration: 0.5, 
-            delay: 1.5, 
+            duration: 0.3, 
+            delay: 0.7, 
             ease: "power3.out", 
-            onComplete: startBlinking // Funkcja, która zostanie wywołana po zakończeniu animacji
+            onComplete: startBlinking
         } 
     ); 
 
@@ -511,24 +507,16 @@ window.onload = function() {
       );
 
     gsap.utils.toArray("#profiles svg").forEach(icon => {
-        gsap.set(icon, { cursor: "pointer" }); // Ustawienie kursora na pointer
+        icon.style.cursor = "pointer";
     
-        icon.addEventListener("mouseenter", () => {
-            gsap.to(icon, { scale: 1.3, duration: 0.3, ease: "power2.out" });
-        });
-    
-        icon.addEventListener("mouseleave", () => {
-            gsap.to(icon, { scale: 1, duration: 0.3, ease: "power2.out" });
-        });
-
         icon.addEventListener("click", () => {
             const links = {
-              "bi-linkedin": "https://www.linkedin.com/in/przemek-mysliwiec/", // Podmień na swój link
-              "bi-github": "https://github.com", // Podmień na swój link
-              "bi-envelope-paper-fill": "mailto:pmysliwiec99@gmail.com" // Podmień na swój email
+              "bi-linkedin": "https://www.linkedin.com/in/przemek-mysliwiec/",
+              "bi-github": "https://github.com",
+              "bi-envelope-paper-fill": "mailto:pmysliwiec99@gmail.com"
             };
             
-            const className = icon.classList[1]; // Pobieranie drugiej klasy (np. bi-linkedin)
+            const className = icon.classList[1];
             if (links[className]) {
               window.open(links[className], "_blank");
             }
@@ -598,6 +586,21 @@ window.onload = function() {
             }, 3000);
         });
     });
+
+    // === CAROUSEL ANIMATION (MARQUEE) ===
+//     const carouselContainer = document.querySelector('.carousel-container');
+//     const carouselTrack = document.querySelector('.carousel-track');
     
+//     if (carouselContainer && carouselTrack) {
+//         // CSS já obsługuje pause na hover za pomocą :hover,
+//         // ale to dodaje dodatkową kontrolę dla pewności
+//         carouselContainer.addEventListener('mouseenter', () => {
+//             carouselTrack.style.animationPlayState = 'paused';
+//         });
+        
+//         carouselContainer.addEventListener('mouseleave', () => {
+//             carouselTrack.style.animationPlayState = 'running';
+//         });
+//     }
     
-}
+ }
