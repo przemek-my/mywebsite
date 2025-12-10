@@ -109,10 +109,10 @@
                         </span>
                     </div>
                 </div>
-                <img src="images/image3.JPG" alt="About me image" class="image">
+                <img src="images/image3.JPG" alt="About me image" class="image" loading="lazy" width="360" height="480">
             </div>
             <div class="responsibilities">
-                <img src="images/image2.JPG" alt="About me image" class="image">
+                <img src="images/image2.JPG" alt="About me image" class="image" loading="lazy" width="360" height="480">
                 <div id = "about-text3">
                     <span>
                         I offer comprehensive <strong>support for business</strong>, in the areas
@@ -147,6 +147,26 @@
                 <span class="technology">Git & Jira Workflow</span>
                 <span class="technology">C & Python Scripting</span>
                 <span class="technology">Web Development Enthusiast</span>
+            </div>
+
+            <div class="work">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <img src="images/carousel-logos/Aptiv_logo.svg.png" alt="Aptiv" class="carousel-logo" loading="lazy">
+                        <img src="images/carousel-logos/Logitech_logo.svg.png" alt="Logitech" class="carousel-logo" loading="lazy">
+                        <img src="images/carousel-logos/Luxoft,_a_DXC_Technology_Company.png" alt="Luxoft" class="carousel-logo" loading="lazy">
+                        <img src="images/carousel-logos/TE_Lockup_RGB_BLUE.png" alt="TE" class="carousel-logo" loading="lazy">
+                        <img src="images/carousel-logos/logo-sii-svg.svg" alt="SII" class="carousel-logo" loading="lazy">
+                        <img src="images/carousel-logos/Bose_logo.svg.png" alt="BOSE" class="carousel-logo" loading="lazy">
+                        <!-- Duplikat logów dla płynnej pętli - renderowany CSS-em zamiast HTML dla lepszej wydajności -->
+                        <img src="images/carousel-logos/Aptiv_logo.svg.png" alt="Aptiv" class="carousel-logo" loading="lazy" aria-hidden="true">
+                        <img src="images/carousel-logos/Logitech_logo.svg.png" alt="Logitech" class="carousel-logo" loading="lazy" aria-hidden="true">
+                        <img src="images/carousel-logos/Luxoft,_a_DXC_Technology_Company.png" alt="Luxoft" class="carousel-logo" loading="lazy" aria-hidden="true">
+                        <img src="images/carousel-logos/TE_Lockup_RGB_BLUE.png" alt="TE" class="carousel-logo" loading="lazy" aria-hidden="true">
+                        <img src="images/carousel-logos/logo-sii-svg.svg" alt="SII" class="carousel-logo" loading="lazy" aria-hidden="true">
+                        <img src="images/carousel-logos/Bose_logo.svg.png" alt="BOSE" class="carousel-logo" loading="lazy" aria-hidden="true">
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -223,17 +243,19 @@
     </main>
 
     <!-- Dodanie skryptu JS -->
-     <!-- Podpięcie EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <!-- Podpięcie EmailJS - asynchronicznie -->
+    <script async src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
         (function(){
-            emailjs.init("JcBlczURJPoQ2s_H_"); // <-- wklej tu swój public key
+            if (window.emailjs) emailjs.init("JcBlczURJPoQ2s_H_");
         })();
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@latest/bundled/lenis.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Biblioteki GSAP i Lenis z defer dla nieblokowania parsowania HTML -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@latest/bundled/lenis.min.js"></script>
+    <!-- Główny skrypt aplikacji -->
+    <script defer src="script.js"></script>
 </body>
 
 </html>
