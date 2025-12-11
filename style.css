@@ -771,6 +771,12 @@ footer p {
     margin: 4px 0;
 }
 
+footer a:link,
+footer a:visited {
+    color: #F0EEE9;
+    text-decoration: none;
+}
+
 
 /* --- RESPONSYWNOŚĆ NA TELEFONY --- */
 @media (max-width: 768px) {
