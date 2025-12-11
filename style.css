@@ -999,8 +999,6 @@ footer p {
     #profiles {
       flex-direction: column;
       gap: 10vw;
-      height: auto;
-      margin-bottom: -5vh;
     }
   
     #message-form form {
