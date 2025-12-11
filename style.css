@@ -543,6 +543,7 @@ main {
 
 .carousel-track {
     display: flex;
+    flex-wrap: nowrap;
     gap: 4rem;
     padding: 3rem 2rem;
     align-items: center;
